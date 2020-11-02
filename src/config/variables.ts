@@ -4,6 +4,14 @@ const getENV = (key: string, defaultValue?: string) => {
   return value;
 };
 
+export const ENV = getENV("NODE_ENV", "development") as
+  | "development"
+  | "production"
+  | "test";
+
+if (!["development", "production", "test"].includes(ENV))
+  throw `Undefined NODE_ENV ${ENV}`;
+
 export const SECRET = getENV("SECRET");
 
 export const PORT = Number(getENV("PORT", "3000"));
