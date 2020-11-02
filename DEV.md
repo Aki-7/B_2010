@@ -6,6 +6,18 @@
 - yarn (My version: v1.22.4)
 - mysql (for local development)
 
+#### .env
+
+```sh
+cp .env.sample .env
+vim .env
+```
+
+- `DB_PASS` 自分のローカルの mysql のパスワード いらなかったら消してちょうだい
+- `DB_USER` ユーザ名も指定可能(default: root)
+- `DB_NAME`, `DB_TEST_NAME` そのままでいいと思う
+- `SECRET` そのままでいいと思う
+
 #### Install this repository
 
 ```sh
@@ -52,3 +64,46 @@ yarn start
 ```
 
 Access to http://localhost:3000/login
+
+## Test
+
+#### Create database
+
+```sh
+mysql -u <username>
+> create database bokin_test_db;
+```
+
+#### Run
+
+No migration command needed (automatically synchronized).
+
+```sh
+yarn test
+```
+
+## Prefix Commit Message
+
+|                  Content                   |        prefix         |          code           |
+| :----------------------------------------: | :-------------------: | :---------------------: |
+|                First commit                |        :tada:         |        `:tada:`         |
+|          Introducing new features          |      :sparkles:       |      `:sparkles:`       |
+|                Fixing a bug                |         :bug:         |         `:bug:`         |
+|              Refactoring code              |       :recycle:       |       `:recycle:`       |
+| Adding or updating the UI and style files  |         :art:         |         `:art:`         |
+|      Improve development environment       |     :sunglasses:      |     `:sunglasses:`      |
+|                Writing docs                |       :pencil:        |       `:pencil:`        |
+|           Improving performance            |         :zap:         |         `:zap:`         |
+|      Work for production environment       |       :running:       |       `:running:`       |
+|        Changing configuration files        |       :wrench:        |       `:wrench:`        |
+| Updating code due to code review changes.  |       :ok_hand:       |       `:ok_hand:`       |
+|          Adding or updating tests          |  :white_check_mark:   |  `:white_check_mark:`   |
+|           Fixing security issue            |        :lock:         |        `:lock:`         |
+|     Adding or updating CI build system     | :construction_worker: | `:construction_worker:` |
+| Writing bad code that needs to be improved |       :hankey:        |       `:hankey:`        |
+|               Improving SEO                |         :mag:         |         `:mag:`         |
+|          Experimenting new things          |       :alembic:       |       `:alembic:`       |
+|              Critical hotfix               |      :ambulance:      |      `:ambulance:`      |
+|           Removing code or files           |        :fire:         |        `:fire:`         |
+|                 Save money                 |        :bank:         |        `:bank:`         |
+|              Work In Progress              |    :construction:     |    `:construction:`     |
