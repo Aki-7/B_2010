@@ -48,4 +48,4 @@ yarn schema:sync
 yarn start
 ```
 
-Access to localhost:3000
+Access to http://localhost:3000/login

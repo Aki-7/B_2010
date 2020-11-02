@@ -2,9 +2,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  BaseEntity,
 } from "typeorm";
 
-class ApplicationEntity {
+class ApplicationEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
