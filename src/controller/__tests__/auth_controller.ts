@@ -36,3 +36,13 @@ describe("POST /login", () => {
     });
   });
 });
+
+describe("GET /signup", () => {
+  baseContext(server);
+
+  it("returns signup template", async () => {
+    const res = await request(app).get("/signup");
+    expect(res.status).toBe(200);
+    expect(res.text).toContain("Signup");
+  });
+});
