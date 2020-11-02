@@ -42,6 +42,9 @@ you need to [transpile](#build) first.
 yarn schema:sync
 ```
 
+開発期間は migration は行わず、schema:sync で DB 管理します.
+(DB のスキーマを /dist/entity/\*.js の内容と同期する. 本番環境ではデータの散逸に繋がり危険だが、とりあえず開発段階は問題ないので、そうする)
+
 #### Start
 
 ```sh
