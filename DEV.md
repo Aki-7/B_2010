@@ -4,6 +4,7 @@
 
 - Node.js ( My version: v13.14.0 )
 - yarn (My version: v1.22.4)
+- mysql (for local development)
 
 #### Install this repository
 
@@ -17,13 +18,29 @@ git clone git@github.com:jphacks/B_2010.git
 yarn install
 ```
 
-#### Build
+#### Transpile
 
 ```sh
 yarn build
 ```
 
 - `-w`: watch option is available
+
+#### Create database
+
+```sh
+mysql -u <username> -p
+...Enter Password
+> create database bokin_db;
+```
+
+#### Synchronize DB schema
+
+you need to [transpile](#build) first.
+
+```sh
+yarn schema:sync
+```
 
 #### Start
 
