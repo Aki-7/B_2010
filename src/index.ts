@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 import path from "path";
-import multer from "multer";
 import { createConnection } from "typeorm";
 import session from "express-session";
 import passport from "passport";
@@ -10,13 +9,9 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bodyParser from "body-parser";
 import { PORT, SECRET } from "./config/variables";
 import sessionStore from "./config/session_store";
-import { parameter } from "./lib/parameter";
 import { User } from "./entity/User";
-import auth from "./middleware/auth";
-import getCurrentUser from "./lib/get_current_user";
 import errorHandler from "./middleware/error_handler";
-
-const upload = multer();
+import routing from "./route";
 
 const app = express();
 
@@ -59,45 +54,7 @@ passport.use(
   )
 );
 
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  })
-);
-
-app.get("/signup", (req, res) => {
-  res.render("signup");
-});
-
-app.post("/signup", upload.none(), (req, res) => {
-  const { password, ...params } = parameter(req).fields({
-    username: true,
-    email: true,
-    password: true,
-  });
-
-  const user = User.create(params);
-  user.setPassword(password);
-  user.save();
-
-  res.redirect("/signup");
-});
-
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/login");
-});
-
-app.get("/", auth, (req, res) => {
-  const user = getCurrentUser(req);
-  res.render("index", { user });
-});
+routing(app);
 
 app.use(errorHandler);
 
