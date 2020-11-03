@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 const getENV = (key: string, defaultValue?: string) => {
   const value = process.env[key] || defaultValue;
   if (value === undefined) throw `Env variable ${key} is not set`;

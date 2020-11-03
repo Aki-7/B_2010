@@ -1,3 +1,4 @@
+import { ValidationError } from "class-validator";
 import { NextFunction, Request, Response } from "express";
 import { ApplicationError, HttpError } from "../lib/errors";
 
@@ -17,6 +18,12 @@ const errorHandler = (
     return res.send(
       `<h1>Application Error</h1><h3>${err.message}</h3><div><pre>${err.stack}</pre></div>`
     );
+  } else if (
+    err instanceof Array &&
+    err.every((e) => e instanceof ValidationError)
+  ) {
+    res.statusCode = 400;
+    res.json(err.map((e: ValidationError) => e.toString()));
   } else {
     next(err);
   }

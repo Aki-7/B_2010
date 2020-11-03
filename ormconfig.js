@@ -31,6 +31,7 @@ const test = {
   migrations: ["src/migration/*.ts"],
   subscribers: ["src/subscriber/*.ts"],
   synchronize: true,
+  dropSchema: true,
   cli: {
     entitiesDir: "src/entity",
     migrationsDir: "src/migration",
