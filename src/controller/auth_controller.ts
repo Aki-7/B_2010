@@ -25,7 +25,7 @@ const signup = R((req, res) => {
   res.render("signup");
 });
 
-const newUser = R((req, res) => {
+const newUser = R(async (req, res) => {
   const { password, ...params } = parameter(req).fields({
     username: true,
     email: true,
@@ -34,9 +34,9 @@ const newUser = R((req, res) => {
 
   const user = User.create(params);
   user.setPassword(password);
-  user.save();
+  await user.save();
 
-  res.redirect("/signup");
+  res.redirect("/");
 });
 
 const logout = R((req, res) => {

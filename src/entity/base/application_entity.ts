@@ -1,8 +1,10 @@
+import { validateOrReject } from "class-validator";
 import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  SaveOptions,
 } from "typeorm";
 
 class ApplicationEntity extends BaseEntity {
@@ -14,6 +16,15 @@ class ApplicationEntity extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  readonly valid = async () => {
+    await validateOrReject(this);
+  };
+
+  async save(options?: SaveOptions) {
+    await this.valid();
+    return await super.save(options);
+  }
 }
 
 export default ApplicationEntity;
