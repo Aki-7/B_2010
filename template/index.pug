@@ -8,9 +8,37 @@ html(lang="en")
   body
     div(class="container mt-4")
       h1 Hello #{ user.username }!
-      a(class="btn btn-warning" href="/logout") logout
+
+      h2 Your cards
+      table(class="table mb-4")
+        thead
+          tr
+            th #
+            th Name
+            th Number
+        tbody
+          each card, index in cards
+            tr
+              th #{index}
+              td #{card.name}
+              td **** **** **** #{card.last4}
+
+      h2 Register new card
+      div(class="container mt-4")
+      form
+        div(class="form-group")
+          label Card Name
+          input(id="cardholder-name" class="form-control" type="text" value="default")
+        div(class="form-group")
+          label Card Info
+          div(id="card-element" class="form-control mb-4")
+        button(id="card-button" class="btn btn-primary" data-secret=client_secret) Save Card
+
+      a(class="btn btn-warning mt-4" href="/logout") logout
 
     //- jQuery and Bootstrap
     script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
     script(src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous")
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous")
+    script(src="https://js.stripe.com/v3/")
+    script(src="/static/index.js" defer)

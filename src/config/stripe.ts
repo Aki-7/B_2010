@@ -20,3 +20,5 @@ const options: Stripe.StripeConfig = ((env) => {
 const stripe = new Stripe(STRIPE_API_KEY, options);
 
 export const customers = stripe.customers;
+export const setupIntents = stripe.setupIntents;
+export const paymentMethods = stripe.paymentMethods;

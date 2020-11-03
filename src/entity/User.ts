@@ -20,7 +20,7 @@ export class User extends ApplicationEntity {
   private hashPassword!: string;
 
   @Column()
-  private stripeId!: string;
+  stripeId!: string;
 
   async associateStripe() {
     if (this.stripeId !== undefined) return;
