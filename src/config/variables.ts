@@ -17,25 +17,29 @@ export const ENV = getENV("NODE_ENV", "development") as
 if (!["development", "production", "test"].includes(ENV))
   throw `Undefined NODE_ENV ${ENV}`;
 
-const switchEnv = (envs: { prod: string; dev: string; test: string }) => {
+const switchEnv = (envs: {
+  prod: () => string;
+  dev: () => string;
+  test: () => string;
+}) => {
   switch (ENV) {
     case "development":
-      return envs.dev;
+      return envs.dev();
 
     case "production":
-      return envs.prod;
+      return envs.prod();
 
     case "test":
-      return envs.test;
+      return envs.test();
   }
 };
 
 export const SECRET = getENV("SECRET");
 
 export const STRIPE_API_KEY = switchEnv({
-  prod: getENV("STRIPE_API_KEY"),
-  dev: getENV("STRIPE_API_KEY"),
-  test: "sk_test_AAA",
+  prod: () => getENV("STRIPE_API_KEY"),
+  dev: () => getENV("STRIPE_API_KEY"),
+  test: () => "sk_test_AAA",
 });
 
 export const PORT = Number(getENV("PORT", "3000"));
