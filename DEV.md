@@ -16,6 +16,7 @@ vim .env
 - `DB_PASS` 自分のローカルの mysql のパスワード いらなかったら消してちょうだい
 - `DB_USER` ユーザ名も指定可能(default: root)
 - `DB_NAME`, `DB_TEST_NAME` そのままでいいと思う
+- `STRIPE_API_KEY` Stripe に登録して自分の test api key を登録してください.
 - `SECRET` そのままでいいと思う
 
 #### Install this repository
@@ -67,6 +68,10 @@ Access to http://localhost:3000/login
 
 ## Test
 
+#### Install Stripe Mock
+
+Read [this](https://github.com/stripe/stripe-mock).
+
 #### Create database
 
 ```sh
@@ -76,9 +81,16 @@ mysql -u <username>
 
 #### Run
 
+##### Start stripe mock
+
+```sh
+stripe-mock
+```
+
 No migration command needed (automatically synchronized).
 
 ```sh
+# In another shell
 yarn test
 ```
 

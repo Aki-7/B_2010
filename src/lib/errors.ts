@@ -16,3 +16,9 @@ export class NotAuthorizedError extends HttpError {
     super(401, message);
   }
 }
+
+export class InternalServerError extends HttpError {
+  constructor(message?: string) {
+    super(500, message);
+  }
+}

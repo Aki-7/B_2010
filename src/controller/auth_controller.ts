@@ -34,9 +34,11 @@ const newUser = R(async (req, res) => {
 
   const user = User.create(params);
   user.setPassword(password);
+  await user.valid();
+  await user.associateStripe();
   await user.save();
 
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 const logout = R((req, res) => {

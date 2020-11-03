@@ -67,7 +67,7 @@ describe("POST /signup", () => {
         })
       );
     expect(res.status).toBe(302);
-    expect(res.headers["location"]).toBe("/");
+    expect(res.headers["location"]).toBe("/login");
     const user = await User.findOne({ email: "test@user.com" });
     expect(user).not.toBe(undefined);
     if (user) await user.remove();
