@@ -22,7 +22,7 @@ export class User extends ApplicationEntity {
   private hashPassword!: string;
 
   @Column()
-  wakeupTime!: Date;
+  wakeupTime!: string;
 
   //TODO: strategyでどの曜日にするのか
 
