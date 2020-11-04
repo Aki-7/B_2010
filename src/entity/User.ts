@@ -1,9 +1,11 @@
-import { Entity, Column } from "typeorm";
+import { Entity, Column, OneToMany, JoinColumn } from "typeorm";
+
 import { IsEmail, IsHash, Length } from "class-validator";
 import { getHashSha25 } from "../lib/sha256hash";
 import { customers } from "../config/stripe";
 import ApplicationEntity from "./base/application_entity";
 import { InternalServerError } from "../lib/errors";
+import { Achievement } from "./Achievement";
 
 @Entity()
 export class User extends ApplicationEntity {
@@ -18,6 +20,16 @@ export class User extends ApplicationEntity {
   @IsHash("sha256")
   @Column()
   private hashPassword!: string;
+
+  @Column()
+  wakeupTime!: Date;
+
+  //TODO: strategyでどの曜日にするのか
+
+  @Column({ nullable: true, default: null })
+  fine?: number;
+
+  @OneToMany(type => Achievement, achievement => achievement.user) achievements?: Achievement[]
 
   @Column()
   stripeId!: string;
