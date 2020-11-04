@@ -1,0 +1,34 @@
+extends layout.pug
+
+block title
+  title Card
+
+block content
+  div(class="container mt-4")
+    h2 Card
+
+    hr
+    div(class="container mt-4")
+      h2 Card
+      hr
+
+      h3 Your cards
+
+      table(class="table mb-4")
+        thead
+          tr
+            th #
+            th Name
+            th Number
+        tbody
+          each card, index in cards
+            tr
+              th #{index}
+              td #{card.name}
+              td **** **** **** #{card.last4}
+
+      a(class="btn btn-primary" href="/card/new") Register new card
+
+    h2 Links
+
+    a(href="/") HOME
