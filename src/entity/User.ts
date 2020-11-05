@@ -42,11 +42,11 @@ export class User extends ApplicationEntity {
     this.stripeId = customer.id
   }
 
-  setPassword = (plain: string) => {
+  setPassword(plain: string) {
     this.hashPassword = getHashSha25(plain)
   }
 
-  validatePassword = (plain: string): boolean => {
+  validatePassword(plain: string): boolean {
     return this.hashPassword === getHashSha25(plain)
   }
 }

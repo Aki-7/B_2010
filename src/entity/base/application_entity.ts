@@ -17,7 +17,7 @@ class ApplicationEntity extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date
 
-  readonly valid = async () => {
+  async valid() {
     await validateOrReject(this)
   }
 
