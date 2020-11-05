@@ -24,7 +24,7 @@ export class Result extends ApplicationEntity {
   @Column({
     type: "enum",
     enum: Status,
-    default: Status.SUCCESS,
+    default: Status.PENDING,
   })
   status!: Status;
 
