@@ -22,6 +22,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Build, tag, and push image to Amazon ECR
+        uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          image_name: bokin
+
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition bokin-task --query taskDefinition > task-definition.json

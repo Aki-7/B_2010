@@ -5,6 +5,14 @@ services:
     ports:
       - 3000:80
     restart: always
+    environment:
+      - DB_PASS=
+      - DB_NAME
+      - DB_HOST=mysql
+      - STRIPE_API_KEY
+      - STRIPE_PUB_KEY
+      - SECRET
+      - DB_USER=root
 
   mysql:
     image: mysql:5.7

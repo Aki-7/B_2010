@@ -4,6 +4,6 @@ set -eu
 
 service nginx restart
 
-# yarn schema:sync
+yarn schema:sync
 
-pm2-runtime /app/ecs-test/app.js
+pm2-runtime /app/dist/main.js

@@ -6,7 +6,7 @@ USER root
 
 WORKDIR /app/
 
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 
 RUN apt-get update
 RUN apt-get install -my wget gnupg
@@ -20,9 +20,14 @@ ADD package.json .
 ADD yarn.lock .
 RUN yarn install
 
-COPY . .
-
+COPY ./src ./src
+COPY tsconfig.build.json .
 RUN yarn build
+
+COPY ./template ./template
+COPY ./static ./static
+COPY ormconfig.js .
+COPY docker-entrypoint.sh .
 
 ADD nginx/default.conf /etc/nginx/conf.d
 
