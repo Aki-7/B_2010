@@ -20,7 +20,6 @@ describe("GET /", () => {
     it("returns dashboard template", async () => {
       const res = await request(app).get("/");
       expect(res.status).toBe(200);
-      expect(res.text).toContain("Hello");
     });
   });
 });

@@ -5,6 +5,10 @@ block title
 
 block content
   div(class="container mt-4")
-    h2 Hello #{ user.username }!
+    h4 #{ user.username }
 
-    a.btn.btn-primary.text-white(href="/") 起床報告
+    if achievedToday
+      button.btn.btn-secondary 今日は起床報告しました
+    else
+      form(method="post" action="/achievement")
+        button.btn.btn-primary.text-white(type="submit") 起床報告
