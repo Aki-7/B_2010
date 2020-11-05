@@ -8,6 +8,7 @@ const userFactory = new ApplicationFactory<User>("User").define(User, {
   email: factory.seq("User.email", (n) => `user-${n}@user.com`),
   stripeId: factory.seq("User.stripeId", (n) => `cus_${n}`),
   hashPassword: getHashSha25("super-password"),
+  fine: 0,
 });
 
 export default userFactory;

@@ -2,10 +2,10 @@ import ApplicationEntity from "./base/application_entity";
 import { JoinColumn, Entity, Column, ManyToOne } from "typeorm";
 import { User } from "./User";
 
-@Entity({})
+@Entity()
 export class Achievement extends ApplicationEntity {
-  @Column({ type: "varchar", length: 256 })
-  achievementName!: string;
+  @Column({ length: 256 })
+  name!: string;
 
   @Column()
   readonly userId!: number;
