@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/factory-girl": "^5.0.2",
     "@types/jest": "^26.0.15",
+    "@types/jquery": "^3.5.4",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",

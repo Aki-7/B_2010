@@ -25,6 +25,13 @@
       "rules": {
         "@typescript-eslint/explicit-module-boundary-types": "off"
       }
+    },
+    {
+      "files": ["static/js/**/*.js"],
+      "rules": {
+        "no-undef": ["error", { "typeof": false }]
+      },
+      "env": { "browser": true }
     }
   ]
 }

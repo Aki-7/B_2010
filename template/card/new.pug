@@ -1,0 +1,29 @@
+extends ../layout.pug
+
+
+
+block title
+  title Register card
+
+block content
+  input(hidden id="stripe_pub_key" value=stripe_pub_key)
+  div(class="container mt-4")
+    h2 Register card
+
+    div(class="form-group")
+      label Card Name
+      input(id="cardholder-name" class="form-control" type="text" value="default")
+    div(class="form-group")
+      label Card Info
+      div(id="card-element" class="form-control")
+    button(id="card-button" class="btn btn-primary" data-secret=client_secret) Save Card
+
+    hr
+
+    h2 Links
+
+    a(href="/") HOME
+
+block end-of-body
+  script(src="https://js.stripe.com/v3/")
+  script(src="/static/js/card/new.js" defer)
