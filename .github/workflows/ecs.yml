@@ -22,20 +22,25 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Render Amazon ECS task definition (production)
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition bokin-task --query taskDefinition > task-definition.json
+
+      - name: Render Amazon ECS task definition
         id: render-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: .github/aws/task-def.json
+          task-definition: task-definition.json
           container-name: bokin-container
           image: "${{ steps.login-ecr.outputs.registry }}/bokin:latest"
 
-      - name: Deploy to Amazon ECS service (production)
+      - name: Deploy to Amazon ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.render-container.outputs.task-definition }}
           service: bokin-service
           cluster: bokin-ecs-cluster
+          wait-for-service-stability: true
 
       - name: Update deploy status
         if: always()
