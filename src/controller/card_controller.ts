@@ -6,25 +6,8 @@ import auth from "../middleware/auth";
 import R from "./base/application_router";
 
 const cardRouting = (app: Express) => {
-  app.get("/card", auth, index);
   app.get("/card/new", auth, newCard);
 };
-
-const index = R(async (req, res) => {
-  const user = getCurrentUser(req);
-
-  const paymentMethods = await stripe.paymentMethods.list({
-    customer: user.stripeId,
-    type: "card",
-  });
-
-  const cards = paymentMethods.data.map((d) => ({
-    last4: d.card?.last4,
-    name: d.billing_details.name,
-  }));
-
-  res.render("card", { cards });
-});
 
 const newCard = R(async (req, res) => {
   const user = getCurrentUser(req);

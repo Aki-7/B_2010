@@ -7,8 +7,15 @@ block content
   div(class="container mt-4")
     h4 #{ user.username }
 
-    if achievedToday
+    if todayResult
       button.btn.btn-secondary 今日は起床報告しました
+
+      p #{ todayResult.wakedUpAt }に起床しました。
+      p #{ todayResult.fine }円が募金額です。
     else
-      form(method="post" action="/achievement")
+      form(method="post" action="/result/wakeup")
         button.btn.btn-primary.text-white(type="submit") 起床報告
+
+    .mt-2.mb-2
+      a
+        i.fas.fa-chart-line 統計を見る
