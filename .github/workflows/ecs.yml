@@ -30,6 +30,21 @@ jobs:
           registry: ${{ steps.login-ecr.outputs.registry }}
           image_name: bokin
 
+      - name: Render Amazon ECS task definition (production)
+        id: render-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .github/aws/task-def.json
+          container-name: bokin-container
+          image: "${{ steps.login-ecr.outputs.registry }}/bokin:latest"
+
+      - name: Deploy to Amazon ECS service (production)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-container.outputs.task-definition }}
+          service: bokin-service
+          cluster: bokin-cluster
+
       - name: Update deploy status
         if: always()
         uses: unacast/actions-github-deployment-status@0.2
