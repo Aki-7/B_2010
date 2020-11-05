@@ -8,11 +8,11 @@ import {
 import { User } from './User'
 
 
-@Entity({ name: 'achivements' })
+@Entity({})
 export class Achievement extends ApplicationEntity {
 
   @Column({ type: 'varchar', length: 256 })
-  achievementName!: number;
+  achievementName!: string;
 
   @Column()
   readonly userId!: number;

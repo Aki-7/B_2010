@@ -1,5 +1,4 @@
 import { Entity, Column, OneToMany, JoinColumn } from "typeorm";
-
 import { IsEmail, IsHash, Length } from "class-validator";
 import { getHashSha25 } from "../lib/sha256hash";
 import { customers } from "../config/stripe";
@@ -21,7 +20,7 @@ export class User extends ApplicationEntity {
   @Column()
   private hashPassword!: string;
 
-  @Column()
+  @Column(({nullable: true, default: null}))
   wakeupTime!: string;
 
   //TODO: strategyでどの曜日にするのか
