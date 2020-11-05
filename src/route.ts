@@ -1,4 +1,5 @@
 import { Express } from "express";
+import achievementRouting from "./controller/achievement_controller";
 import alarmRouting from "./controller/alarm_controller";
 import authRouting from "./controller/auth_controller";
 import cardRouting from "./controller/card_controller";
@@ -15,6 +16,7 @@ const routing = (app: Express) => {
   indexRouting(app);
   snsRouting(app);
   userRouting(app);
+  achievementRouting(app);
 };
 
 export default routing;
