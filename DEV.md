@@ -95,6 +95,25 @@ No migration command needed (automatically synchronized).
 yarn test
 ```
 
+#### Deploy
+
+1. https://github.com/settings/tokens ← ここにアクセスして、自分のパーソナル token を取得する
+
+scope は repo(全て) と workflow に check を入れる.
+
+2. 取得した token を`.env`の GITHUB_MY_TOKEN に設定する
+
+3. デプロイ
+
+```sh
+node deploy.js # github の deploy をトリガーする
+node deploy.js some/branch # branchの指定も可能
+```
+
+4. ステータスの確認はここから
+
+https://github.com/jphacks/B_2010/actions
+
 ## Prefix Commit Message
 
 |                  Content                   |        prefix         |          code           |
