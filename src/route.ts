@@ -13,7 +13,7 @@ const routing = (app: Express) => {
   cardRouting(app)
   donationRouting(app)
   indexRouting(app)
-  snsRouting(app)
+  // snsRouting(app)
   userRouting(app)
 }
 

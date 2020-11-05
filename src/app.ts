@@ -2,6 +2,8 @@ import express from 'express'
 import http from 'http'
 import path from 'path'
 import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import cors from 'cors'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import bodyParser from 'body-parser'
@@ -18,9 +20,13 @@ export const createApp = () => {
   app.set('view engine', 'pug')
   app.set('views', path.join(process.cwd(), 'template'))
 
+  app.use(cors())
+  app.use(cookieParser())
+
   app.use('/static', express.static('static'))
 
   app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(bodyParser.json())
 
   app.use(
     session({
