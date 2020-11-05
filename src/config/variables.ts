@@ -42,6 +42,12 @@ export const STRIPE_API_KEY = switchEnv({
   test: () => 'sk_test_AAA',
 })
 
+export const STRIPE_PUB_KEY = switchEnv({
+  prod: () => getENV('STRIPE_PUB_KEY'),
+  dev: () => getENV('STRIPE_PUB_KEY'),
+  test: () => 'pk_test_AAA',
+})
+
 export const PORT = Number(getENV('PORT', '3000'))
 
 export const DB_HOST = getENV('DB_HOST', 'localhost')
@@ -50,9 +56,9 @@ export const DB_PORT = Number(getENV('DB_PORT', '3306'))
 
 export const DB_USER = getENV('DB_USER', 'root')
 
-export const DB_NAME = getENV('DB_NAME')
-
 export const DB_PASS = getENV('DB_PASS', '')
+
+export const DB_NAME = getENV('DB_NAME')
 
 export const TWITTER_CONSUMER_KEY = getENV('TWITTER_CONSUMER_KEY')
 

@@ -1,30 +1,30 @@
-import { validateOrReject } from 'class-validator'
+import { validateOrReject } from "class-validator";
 import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
   SaveOptions,
-} from 'typeorm'
+} from "typeorm";
 
 class ApplicationEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number
+  id!: number;
 
   @CreateDateColumn()
-  createdAt!: Date
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt!: Date
+  updatedAt!: Date;
 
   async valid() {
-    await validateOrReject(this)
+    await validateOrReject(this);
   }
 
   async save(options?: SaveOptions) {
-    await this.valid()
-    return await super.save(options)
+    await this.valid();
+    return await super.save(options);
   }
 }
 
-export default ApplicationEntity
+export default ApplicationEntity;

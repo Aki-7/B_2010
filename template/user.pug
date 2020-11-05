@@ -5,12 +5,18 @@ block title
 
 block content
   div(class="container mt-4")
-    h2 User
+    h2 #{ user.username }
 
-    a(href="/logout") Logout
+    ul.list-group.mb-4
+      li.list-group-item
+        a(href="/sns") SNS
+      li.list-group-item
+        a(href="/alarm") ALARM
+      li.list-group-item
+        a(href="/donation") DONATION
+      li.list-group-item
+        a(href="/card") CARD
+      li.list-group-item
+        a(href="/user") USER
 
-    hr
-
-    h2 Links
-
-    a(href="/") HOME
+    a.btn.btn-secondary(href="/logout") Logout

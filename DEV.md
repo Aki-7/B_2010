@@ -16,7 +16,8 @@ vim .env
 - `DB_PASS` 自分のローカルの mysql のパスワード いらなかったら消してちょうだい
 - `DB_USER` ユーザ名も指定可能(default: root)
 - `DB_NAME`, `DB_TEST_NAME` そのままでいいと思う
-- `STRIPE_API_KEY` Stripe に登録して自分の test api key を登録してください.
+- `STRIPE_API_KEY` Stripe に登録して自分の test api key (secret) を登録してください.
+- `STRIPE_PUB_KEY` Stripe に登録して自分の test api key (public) を登録してください.
 - `SECRET` そのままでいいと思う
 
 #### Install this repository
