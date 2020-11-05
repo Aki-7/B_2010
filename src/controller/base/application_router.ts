@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from 'express'
 
 const R = (
   handler: (
@@ -8,14 +8,14 @@ const R = (
   ) => void | Promise<void>
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    (async () => {
+    ;(async () => {
       try {
-        await handler(req, res, next);
+        await handler(req, res, next)
       } catch (error) {
-        next(error);
+        next(error)
       }
-    })();
-  };
-};
+    })()
+  }
+}
 
-export default R;
+export default R
