@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { Result, Status } from "../entity/Result";
+import { Result } from "../entity/Result";
 import getCurrentUser from "../lib/get_current_user";
 import auth from "../middleware/auth";
 import R from "./base/application_router";
