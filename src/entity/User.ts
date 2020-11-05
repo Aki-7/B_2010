@@ -1,5 +1,5 @@
 import { Entity, Column, OneToMany } from "typeorm";
-import { IsEmail, IsHash, Length } from "class-validator";
+import { IsEmail, IsHash, Length, IsInt, Max, Min } from "class-validator";
 import { getHashSha25 } from "../lib/sha256hash";
 import stripe from "../config/stripe";
 import ApplicationEntity from "./base/application_entity";
@@ -25,7 +25,11 @@ export class User extends ApplicationEntity {
 
   //TODO: strategyでどの曜日にするのか
 
-  @Column({ nullable: true, default: null })
+  /**JPY */
+  @Max(5000)
+  @Min(0)
+  @IsInt()
+  @Column({ default: 0 })
   fine?: number;
 
   @OneToMany(() => Achievement, (achievement) => achievement.user)
