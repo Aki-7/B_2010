@@ -32,7 +32,7 @@ const newUser = R(async (req, res) => {
     password: true,
   });
 
-  const user = User.create(params);
+  const user = User.create({ ...params, fine: 0 });
   user.setPassword(password);
   await user.valid();
   await user.associateStripe();
