@@ -35,7 +35,7 @@ jobs:
 
       - name: Create Database
         run: |
-          mysql -h 127.0.0.1 -u root < ./db/1_create_db.sql
+          mysql -h 127.0.0.1 -u root < ./.github/test/db/1_create_test_db.sql
 
       - name: Run tests
         run: |

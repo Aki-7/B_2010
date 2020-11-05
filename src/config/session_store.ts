@@ -24,6 +24,6 @@ export default ((env) => {
       return testStore();
     case "production":
       // FIXME:
-      throw "not implemented";
+      return developmentStore();
   }
 })(ENV);

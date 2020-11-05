@@ -1,0 +1,16 @@
+version: "3"
+services:
+  nginx:
+    build: .
+    ports:
+      - 3000:80
+    restart: always
+
+  mysql:
+    image: mysql:5.7
+    expose:
+      - 3306
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
