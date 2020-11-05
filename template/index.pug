@@ -1,33 +1,24 @@
-<!DOCTYPE html>
-html(lang="en")
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous")
-    title Home
-  body
-    div(class="container mt-4")
-      h1 Bokin Home
-      h4 Hello #{ user.username }!
+extends layout.pug
 
-      hr
+block title
+  title Home
 
-      h2 Dashboard
+block content
+  div(class="container mt-4")
+    h1 Bokin Home
+    h4 Hello #{ user.username }!
 
-      hr
+    hr
 
-      h2 Links
+    h2 Dashboard
 
-      nav(class="nav")
-        a(class="nav-link" href="/sns") SNS
-        a(class="nav-link" href="/alarm") ALARM
-        a(class="nav-link" href="/donation") DONATION
-        a(class="nav-link" href="/card") CARD
-        a(class="nav-link" href="/user") USER
+    hr
 
-    //- jQuery and Bootstrap
-    script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous")
-    script(src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous")
-    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous")
-    script(src="https://js.stripe.com/v3/")
-    script(src="/static/index.js" defer)
+    h2 Links
+
+    nav(class="nav")
+      a(class="nav-link" href="/sns") SNS
+      a(class="nav-link" href="/alarm") ALARM
+      a(class="nav-link" href="/donation") DONATION
+      a(class="nav-link" href="/card") CARD
+      a(class="nav-link" href="/user") USER
