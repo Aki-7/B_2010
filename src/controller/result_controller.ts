@@ -13,16 +13,22 @@ const create = R(async (req, res) => {
 
   const current = new Date();
 
-  const params = {
-    userId: user.id,
-    status: Result.getStatus(user.targetWakeupTime),
-    fine: user.fine,
-    wakedUpAt: current,
-    targetWakeupTime: user.targetWakeupTime,
-  };
+  const todayResult = await Result.today(user);
+  if (todayResult) {
+    todayResult.wakedUpAt = current;
+    await todayResult.save();
+  } else {
+    const params = {
+      userId: user.id,
+      status: Result.getStatus(user.targetWakeupTime),
+      fine: user.fine,
+      wakedUpAt: current,
+      targetWakeupTime: user.targetWakeupTime,
+    };
 
-  const result = Result.create(params);
-  await result.save();
+    const result = Result.create(params);
+    await result.save();
+  }
   res.redirect("/");
 });
 
