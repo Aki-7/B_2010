@@ -8,7 +8,6 @@ const alarmRouting = (app: Express) => {
   app.post("/alarm/update", auth, update);
 };
 
-// TODO: POSTのテスト書く
 const update = R(async (req, res) => {
   const { targetWakeupTime } = parameter(req).fields({
     targetWakeupTime: true,

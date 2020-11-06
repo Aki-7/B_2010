@@ -1,42 +1,39 @@
 import request from "supertest";
 import qs from "query-string";
 import { createApp } from "../../app";
-import { User } from "../../entity/User";
 import authContext from "../../tests/auth_context";
 import baseContext from "../../tests/base_context";
 
 const { app, server } = createApp();
 
-describe("POST /alart/update", () => {
-  describe("when not authenticated", () => {
+describe("POST /donation/pay", () => {
+  describe("when not logged in", () => {
     baseContext(server);
     it("redirects to /login", async () => {
       const res = await request(app)
-        .post("/alarm/update")
+        .post("/donation/pay")
         .send(
           qs.stringify({
-            targetWakeupTime: "08:00",
+            amount: 100,
           })
         );
       expect(res.status).toBe(302);
+      expect(res.headers["location"]).toBe("/login");
     });
   });
 
   describe("when authenticated", () => {
-    let user: User;
-    authContext(app, server, (u) => (user = u));
-    it("update current user's targetWakeupTime", async () => {
+    authContext(app, server);
+    it("redirect to /donation?message=Thank You", async () => {
       const res = await request(app)
-        .post("/alarm/update")
+        .post("/donation/pay")
         .send(
           qs.stringify({
-            targetWakeupTime: "08:33",
+            amount: 100,
           })
         );
       expect(res.status).toBe(302);
-      expect(res.headers["location"]).toBe("/user");
-      expect(user.targetWakeupTime?.getHours()).toBe(8);
-      expect(user.targetWakeupTime?.getMinutes()).toBe(33);
+      expect(res.headers["location"]).toBe("/");
     });
   });
 });
