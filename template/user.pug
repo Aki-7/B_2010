@@ -1,7 +1,7 @@
 extends layout.pug
 
 block title
-  title User
+  title 設定
 
 block content
   div(class="container mt-4")
@@ -9,14 +9,32 @@ block content
 
     ul.list-group.mb-4
       li.list-group-item
+        p メールアドレス: #{ user.email }
+      li.list-group-item
         a(href="/sns") SNS
+        p 現在の連携中のアカウント: #{ user.email }
       li.list-group-item
-        a(href="/alarm") ALARM
+        a(href="/alarm") 起床時刻の設定
+        p 現在の起床予定時刻: #{ user.wakeupTime }円
       li.list-group-item
-        a(href="/donation") DONATION
+        a(href="/donation") 募金額の設定
+        p 現在の寝坊時の募金額: #{ user.fine }円
       li.list-group-item
-        a(href="/card") CARD
-      li.list-group-item
-        a(href="/user") USER
+        h5.mb-2 クレジットカードリスト
+        table(class="table mb-4")
+          thead
+            tr
+              th #
+              th カード名
+              th カード番号
+          tbody
+            each card, index in cards
+              tr
+                th #{index}
+                td #{card.name}
+                td **** **** **** #{card.last4}
 
-    a.btn.btn-secondary(href="/logout") Logout
+        a(class="btn btn-primary" href="/card/new") Register new card
+
+
+    a.btn.btn-secondary(href="/logout" onclick="return confirm('ログアウトしようとしています。よろしいですか？')") ログアウト
