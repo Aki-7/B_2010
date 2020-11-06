@@ -1,4 +1,4 @@
-extends layout.pug
+extends ../layout.pug
 
 block title
   title 設定
@@ -14,7 +14,7 @@ block content
         a(href="/sns") SNS
         p 現在の連携中のアカウント: #{ user.email }
       li.list-group-item
-        a(href="/alarm") 起床時刻の設定
+        h6 起床時刻の設定
         p 現在の起床予定時刻: #{ user.getTargetWakeupTimeString() }
 
         form(action="/alarm/update" method="post")
@@ -25,7 +25,7 @@ block content
               button.btn.btn-primary(type='submit') 更新
 
       li.list-group-item
-        a(href="/donation") 募金額の設定
+        h6 募金額の設定
         p 現在の寝坊時の募金額: #{ user.fine }円
 
         form(action="/donation/update", method="post")
@@ -36,7 +36,21 @@ block content
                   .input-group-prepend
                     .input-group-text ￥
                   input(id="cardholder-name" class="form-control" name="amount" type="number" value=user.fine)
-          button.btn.btn-primary(type='submit') 更新
+                  .input-group-append
+                    button.btn.btn-primary(type='submit') 変更
+
+        h6.mt-4 今すぐ募金
+        form(action="/donation/pay", method="post" onsubmit="return confirm('募金します、よろしいですか?')")
+          .form-row.align-items-center
+            .col-auto.my-1
+              .form-group
+                .input-group
+                  .input-group-prepend
+                    .input-group-text ￥
+                  input.form-control(name="amount", value="0")
+                  .input-group-append
+                    button.btn.btn-primary(type="submit") 募金
+
       li.list-group-item
         h5.mb-2 クレジットカードリスト
         table(class="table mb-4")
@@ -56,3 +70,4 @@ block content
 
 
     a.btn.btn-secondary(href="/logout" onclick="return confirm('ログアウトしようとしています。よろしいですか？')") ログアウト
+    .my-5

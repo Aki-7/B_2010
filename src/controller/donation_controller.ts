@@ -52,7 +52,7 @@ const pay = R(async (req, res) => {
     confirm: true,
   });
 
-  res.redirect(`/donation?${qs.stringify({ message: "Thank You" })}`);
+  res.redirect("/");
 });
 
 export default donationRouting;
