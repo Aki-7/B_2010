@@ -33,7 +33,7 @@ export class User extends ApplicationEntity {
   fine!: number;
 
   @OneToMany(() => Result, (result) => result.user)
-  results?: Result[];
+  results!: Result[];
 
   @Column()
   stripeId!: string;
@@ -62,6 +62,14 @@ export class User extends ApplicationEntity {
       `${current.getFullYear()}/${
         current.getMonth() + 1
       }/${current.getDate()} ${time}:00`
+    );
+  }
+  getCurrentTargetWakeupTimeDate() {
+    const current = new Date();
+    return new Date(
+      `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()} ${this.getTargetWakeupTimeString()}:00`
     );
   }
 

@@ -1,12 +1,5 @@
 import ApplicationEntity from "./base/application_entity";
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  getRepository,
-  Equal,
-  Between,
-} from "typeorm";
+import { Entity, Column, ManyToOne, Equal, Between } from "typeorm";
 import { User } from "./User";
 
 export enum Status {
@@ -54,7 +47,9 @@ export class Result extends ApplicationEntity {
     }
   }
 
-  static async today(user: User): Promise<Result | undefined> {
+  static async today(): Promise<Result[]>;
+  static async today(user: User): Promise<Result | undefined>;
+  static async today(user?: User): Promise<Result | Result[] | undefined> {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
@@ -63,15 +58,60 @@ export class Result extends ApplicationEntity {
     const beginningOfDay = "00:00:00";
     const endOfDay = "23:59:59";
 
-    const todayResult = await getRepository(Result).findOne({
-      where: {
-        userId: Equal(user.id),
-        wakedUpAt: Between(
-          todayDate + " " + beginningOfDay,
-          todayDate + " " + endOfDay
-        ),
-      },
-    });
-    return todayResult;
+    if (user) {
+      return await Result.findOne({
+        where: {
+          userId: Equal(user.id),
+          createdAt: Between(
+            todayDate + " " + beginningOfDay,
+            todayDate + " " + endOfDay
+          ),
+        },
+      });
+    } else {
+      return await Result.find({
+        where: {
+          createdAt: Between(
+            todayDate + " " + beginningOfDay,
+            todayDate + " " + endOfDay
+          ),
+        },
+      });
+    }
+  }
+
+  static async createResultIfNeed(current: Date): Promise<void> {
+    const todayResults = await Result.today();
+    const userIdListWithTodayResult = await todayResults.map(
+      (result) => result.userId
+    );
+    const userListWithoutTodayResult =
+      userIdListWithTodayResult.length > 0
+        ? await User.createQueryBuilder("user")
+            .where("user.id NOT IN (:...ids)", {
+              ids: userIdListWithTodayResult,
+            })
+            .getMany()
+        : await User.find();
+
+    // TODO: transaction処理にするか検討する
+    await Promise.all(
+      userListWithoutTodayResult.map(async (user) => {
+        if (
+          user.targetWakeupTime &&
+          user.getCurrentTargetWakeupTimeDate() < current
+        ) {
+          const params = {
+            userId: user.id,
+            status: Status.FAILED,
+            fine: user.fine,
+            targetWakeupTime: user.targetWakeupTime,
+          };
+
+          const result = Result.create(params);
+          await result.save();
+        }
+      })
+    );
   }
 }

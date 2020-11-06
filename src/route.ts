@@ -7,6 +7,7 @@ import donationRouting from "./controller/donation_controller";
 import indexRouting from "./controller/index_controller";
 import snsRouting from "./controller/sns_controller";
 import userRouting from "./controller/user_controller";
+import checkWakeupRouting from "./controller/service/check_wakeup_controller";
 
 const routing = (app: Express) => {
   alarmRouting(app);
@@ -17,6 +18,7 @@ const routing = (app: Express) => {
   snsRouting(app);
   userRouting(app);
   resultRouting(app);
+  checkWakeupRouting(app);
 };
 
 export default routing;

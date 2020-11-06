@@ -14,7 +14,7 @@ block content
         a(href="https://stripe.com/docs/testing#cards") こちら
     h4 #{ user.username }
 
-    if todayResult
+    if todayResult && todayResult.wakedUpAt
       button.btn.btn-secondary 今日は起床報告しました
 
       p #{ todayResult.wakedUpAt }に起床しました。
