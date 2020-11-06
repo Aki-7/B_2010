@@ -10,10 +10,11 @@ import {
 } from '../config/variables'
 import auth from '../middleware/auth'
 import R from './base/application_router'
+import getCurrentUser from '../lib/get_current_user'
 
 const snsRouting = (app: Express) => {
   app.get('/twitter/auth', auth, twitterAuth)
-  app.get('/auth/twitter/callback', auth, twitterCallback)
+  app.get('/auth/twitter/callback', twitterCallback)
   app.get('/sns', auth, index)
 }
 
@@ -32,7 +33,6 @@ const twitterAuth = R((req, res, next) => {
   const request_data = {
     url: 'https://api.twitter.com/oauth/request_token',
     method: 'POST',
-    data: { status: 'Hello Ladies + Gentlemen, a signed OAuth request!' },
   }
   request(
     {
@@ -42,9 +42,11 @@ const twitterAuth = R((req, res, next) => {
     },
     (error, response, body) => {
       if (error) {
+        console.log(error)
         next(error)
       }
       const { oauth_token } = qs.parse(body)
+
       res.redirect(
         `https://api.twitter.com/oauth/authorize?oauth_token=${oauth_token}`
       )
@@ -53,8 +55,8 @@ const twitterAuth = R((req, res, next) => {
 })
 
 const twitterCallback = R((req, res, next) => {
-  console.log('aaaa')
   const { oauth_verifier, oauth_token } = req.query
+  const user = getCurrentUser(req)
 
   const oauth = new OAuth({
     consumer: {
@@ -78,12 +80,22 @@ const twitterCallback = R((req, res, next) => {
       method: request_data.method,
       form: oauth.authorize(request_data),
     },
-    (error, response, body) => {
+    async (error, response, body) => {
       if (error) {
         console.log(error)
-        next(error)
+        return next(error)
       }
-      console.log(body)
+      const {
+        oauth_token: oauthToken,
+        oauth_token_secret: oauthTokenSecret,
+      } = qs.parse(body)
+
+      if (oauthToken && oauthTokenSecret) {
+        user.twitterOauthToken = oauthToken as string
+        user.twitterOauthTokenSecret = oauthTokenSecret as string
+        await user.save()
+      }
+
       res.redirect('/sns')
     }
   )

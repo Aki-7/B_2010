@@ -23,6 +23,12 @@ export class User extends ApplicationEntity {
   @Column({ type: 'datetime', nullable: true })
   targetWakeupTime?: Date
 
+  @Column({ nullable: true, length: 256 })
+  twitterOauthToken?: string
+
+  @Column({ nullable: true, length: 256 })
+  twitterOauthTokenSecret?: string
+
   //TODO: strategyでどの曜日にするのか
 
   /**JPY */
