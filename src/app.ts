@@ -6,13 +6,20 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
+import { Strategy } from 'passport-twitter'
 import bodyParser from 'body-parser'
 import { SECRET } from './config/variables'
 import sessionStore from './config/session_store'
 import { User } from './entity/User'
 import errorHandler from './middleware/error_handler'
 import routing from './route'
-
+import {
+  TWITTER_API_ACCESS_TOKEN_SECRET,
+  TWITTER_API_ACCESS_TOKEN,
+  TWITTER_CONSUMER_SECRET_KEY,
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CALLBACK_URL,
+} from './config/variables'
 export const createApp = () => {
   const app = express()
   const server = http.createServer(app)
