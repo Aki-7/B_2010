@@ -30,7 +30,7 @@ export class User extends ApplicationEntity {
   @Min(0)
   @IsInt()
   @Column({ default: 0 })
-  fine?: number;
+  fine!: number;
 
   @OneToMany(() => Result, (result) => result.user)
   results?: Result[];
