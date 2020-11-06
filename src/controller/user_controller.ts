@@ -20,7 +20,11 @@ const index = R(async (req, res) => {
     name: d.billing_details.name,
   }));
 
-  res.render("user", { user, cards });
+  res.render("user/index", {
+    user,
+    cards,
+    targetWakeupTime: user.targetWakeupTime,
+  });
 });
 
 export default userRouting;

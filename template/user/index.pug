@@ -15,10 +15,28 @@ block content
         p 現在の連携中のアカウント: #{ user.email }
       li.list-group-item
         a(href="/alarm") 起床時刻の設定
-        p 現在の起床予定時刻: #{ user.wakeupTime }円
+        p 現在の起床予定時刻: #{ user.getTargetWakeupTimeString() }
+
+        form(action="/alarm/update" method="post")
+          .form-row.align-items-center
+            .col-auto.my-1
+              input#alarm.form-control(type='time' name="targetWakeupTime" value=user.getTargetWakeupTimeString())
+            .col-auto.my-1
+              button.btn.btn-primary(type='submit') 更新
+
       li.list-group-item
         a(href="/donation") 募金額の設定
         p 現在の寝坊時の募金額: #{ user.fine }円
+
+        form(action="/donation/update", method="post")
+          .form-row.align-items-center
+            .col-auto.my-1
+              .form-group
+                .input-group
+                  .input-group-prepend
+                    .input-group-text ￥
+                  input(id="cardholder-name" class="form-control" name="amount" type="number" value=user.fine)
+          button.btn.btn-primary(type='submit') 更新
       li.list-group-item
         h5.mb-2 クレジットカードリスト
         table(class="table mb-4")
@@ -34,7 +52,7 @@ block content
                 td #{card.name}
                 td **** **** **** #{card.last4}
 
-        a(class="btn btn-primary" href="/card/new") Register new card
+        a(class="btn btn-primary" href="/card/new") 新しいカードを登録
 
 
     a.btn.btn-secondary(href="/logout" onclick="return confirm('ログアウトしようとしています。よろしいですか？')") ログアウト
