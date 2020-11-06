@@ -5,6 +5,13 @@ block title
 
 block content
   div(class="container mt-4")
+    .alert.alert-warning.alert-dismissible
+      button.close(data-dismiss="alert")
+        span(aria-hidden="true") &times;
+      h4 β版の注意
+      p ベータ版ですのでご自身のクレジットカードの登録は御控えください.SLL通信ではないです.
+      p Test用のカード一覧は
+        a(href="https://stripe.com/docs/testing#cards") こちら
     h4 #{ user.username }
 
     if todayResult
