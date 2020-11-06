@@ -5,15 +5,10 @@ import auth from "../middleware/auth";
 import R from "./base/application_router";
 
 const donationRouting = (app: Express) => {
-  app.get("/donation", auth, index);
-  app.post("/donation", auth, update);
+  app.post("/donation/update", auth, update);
 };
 
-const index = R((req, res) => {
-  const user = getCurrentUser(req);
-  res.render("donation", { amount: user.fine });
-});
-
+// TODO: POSTのテスト書く
 const update = R(async (req, res) => {
   const { amount } = parameter(req).fields({
     amount: true,
@@ -23,7 +18,7 @@ const update = R(async (req, res) => {
 
   user.fine = Number(amount);
   await user.save();
-  res.redirect("/");
+  res.redirect("/user");
 });
 
 export default donationRouting;

@@ -53,4 +53,21 @@ export class User extends ApplicationEntity {
   validatePassword(plain: string): boolean {
     return this.hashPassword === getHashSha25(plain);
   }
+
+  // HH:MM -> 日付の変換
+  setTargetWakeupTime(time: string) {
+    const current = new Date();
+
+    this.targetWakeupTime = new Date(
+      `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()} ${time}:00`
+    );
+  }
+
+  getTargetWakeupTimeString() {
+    const hh = ("0" + this.targetWakeupTime?.getHours()).slice(-2);
+    const mm = ("0" + this.targetWakeupTime?.getMinutes()).slice(-2);
+    return `${hh}:${mm}`;
+  }
 }
