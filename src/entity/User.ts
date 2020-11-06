@@ -4,7 +4,7 @@ import { getHashSha25 } from '../lib/sha256hash'
 import stripe from '../config/stripe'
 import ApplicationEntity from './base/application_entity'
 import { InternalServerError } from '../lib/errors'
-import { Achievement } from './Achievement'
+import { Result } from './Result'
 
 @Entity()
 export class User extends ApplicationEntity {
@@ -20,8 +20,8 @@ export class User extends ApplicationEntity {
   @Column()
   private hashPassword!: string
 
-  @Column({ nullable: true, default: null })
-  wakeupTime!: string
+  @Column({ type: 'datetime', nullable: true })
+  targetWakeupTime?: Date
 
   //TODO: strategyでどの曜日にするのか
 
@@ -30,10 +30,10 @@ export class User extends ApplicationEntity {
   @Min(0)
   @IsInt()
   @Column({ default: 0 })
-  fine?: number
+  fine!: number
 
-  @OneToMany(() => Achievement, (achievement) => achievement.user)
-  achievements?: Achievement[]
+  @OneToMany(() => Result, (result) => result.user)
+  results!: Result[]
 
   @Column()
   stripeId!: string
@@ -52,5 +52,30 @@ export class User extends ApplicationEntity {
 
   validatePassword(plain: string): boolean {
     return this.hashPassword === getHashSha25(plain)
+  }
+
+  // HH:MM -> 日付の変換
+  setTargetWakeupTime(time: string) {
+    const current = new Date()
+
+    this.targetWakeupTime = new Date(
+      `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()} ${time}:00`
+    )
+  }
+  getCurrentTargetWakeupTimeDate() {
+    const current = new Date()
+    return new Date(
+      `${current.getFullYear()}/${
+        current.getMonth() + 1
+      }/${current.getDate()} ${this.getTargetWakeupTimeString()}:00`
+    )
+  }
+
+  getTargetWakeupTimeString() {
+    const hh = ('0' + this.targetWakeupTime?.getHours()).slice(-2)
+    const mm = ('0' + this.targetWakeupTime?.getMinutes()).slice(-2)
+    return `${hh}:${mm}`
   }
 }

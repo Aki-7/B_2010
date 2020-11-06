@@ -1,18 +1,16 @@
 import { Express } from "express";
+import qs from "query-string";
+import stripe from "../config/stripe";
 import getCurrentUser from "../lib/get_current_user";
 import { parameter } from "../lib/parameter";
 import auth from "../middleware/auth";
 import R from "./base/application_router";
 
 const donationRouting = (app: Express) => {
-  app.get("/donation", auth, index);
-  app.post("/donation", auth, update);
+  // TODO: POSTのテスト書く
+  app.post("/donation/update", auth, update);
+  app.post("/donation/pay", auth, pay);
 };
-
-const index = R((req, res) => {
-  const user = getCurrentUser(req);
-  res.render("donation", { amount: user.fine });
-});
 
 const update = R(async (req, res) => {
   const { amount } = parameter(req).fields({
@@ -23,6 +21,37 @@ const update = R(async (req, res) => {
 
   user.fine = Number(amount);
   await user.save();
+  res.redirect("/user");
+});
+
+const pay = R(async (req, res) => {
+  const user = getCurrentUser(req);
+  const { amount } = parameter(req).fields({
+    amount: true,
+  });
+
+  const paymentMethods = await stripe.paymentMethods.list({
+    customer: user.stripeId,
+    type: "card",
+  });
+
+  if (paymentMethods.data.length < 1) {
+    res.redirect(
+      `/donation?${qs.stringify({
+        message: "No valid credit card. Please register your card first.",
+      })}`
+    );
+  }
+
+  await stripe.paymentIntents.create({
+    amount,
+    currency: "jpy",
+    customer: user.stripeId,
+    payment_method: paymentMethods.data[0].id,
+    off_session: true,
+    confirm: true,
+  });
+
   res.redirect("/");
 });
 

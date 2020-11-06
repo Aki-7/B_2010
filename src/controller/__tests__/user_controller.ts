@@ -20,7 +20,7 @@ describe("GET /user", () => {
     it("returns user template", async () => {
       const res = await request(app).get("/user");
       expect(res.status).toBe(200);
-      expect(res.text).toContain("User");
+      expect(res.text).toContain("ログアウト");
     });
   });
 });

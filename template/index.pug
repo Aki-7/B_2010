@@ -5,10 +5,27 @@ block title
 
 block content
   div(class="container mt-4")
+    .alert.alert-warning.alert-dismissible
+      button.close(data-dismiss="alert")
+        span(aria-hidden="true") &times;
+      h4 β版の注意
+      p ベータ版ですのでご自身のクレジットカードの登録は御控えください.SLL通信ではないです.
+      p Test用のカード一覧は
+        a(href="https://stripe.com/docs/testing#cards") こちら
     h4 #{ user.username }
 
-    if achievedToday
+    if todayResult && todayResult.wakedUpAt
       button.btn.btn-secondary 今日は起床報告しました
+
+      p #{ todayResult.wakedUpAt }に起床しました。
     else
-      form(method="post" action="/achievement")
+      form(method="post" action="/result/wakeup")
         button.btn.btn-primary.text-white(type="submit") 起床報告
+
+    .mt-2.mb-2
+      a.btn.btn-primary.text-white
+        i.fas.fa-chart-line 統計を見る
+
+    .my-2
+      p 今月の支払額
+      h4 #{ sum } 円

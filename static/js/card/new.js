@@ -29,7 +29,7 @@ function main() {
           alert(result.error);
           console.log(result);
         } else {
-          window.location.href = "/card";
+          window.location.href = "/user";
         }
       });
   });
