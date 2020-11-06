@@ -38,7 +38,7 @@ const pay = R(async (req, res) => {
   if (paymentMethods.data.length < 1) {
     res.redirect(
       `/donation?${qs.stringify({
-        message: "No valid credit card. Please register your cart first",
+        message: "No valid credit card. Please register your card first.",
       })}`
     );
   }
