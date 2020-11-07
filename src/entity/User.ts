@@ -34,6 +34,12 @@ export class User extends ApplicationEntity {
   @Column({ nullable: true, length: 256 })
   twitterOauthTokenSecret?: string
 
+  @Column({ nullable: true })
+  donationTarget?: string
+
+  @Column({ nullable: true })
+  donationTargetUrl?: string
+
   //TODO: strategyでどの曜日にするのか
 
   /**JPY */
