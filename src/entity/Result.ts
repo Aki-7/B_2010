@@ -36,6 +36,25 @@ export class Result extends ApplicationEntity {
   @ManyToOne(() => User, (user) => user.results)
   readonly user!: User;
 
+  static async wakedUp(current: Date, user: User) {
+    const todayResult = await Result.today(user);
+    if (todayResult) {
+      todayResult.wakedUpAt = current;
+      await todayResult.save();
+    } else {
+      const params = {
+        userId: user.id,
+        status: Result.getStatus(user.targetWakeupTime),
+        fine: user.fine,
+        wakedUpAt: current,
+        targetWakeupTime: user.targetWakeupTime,
+      };
+
+      const result = Result.create(params);
+      await result.save();
+    }
+  }
+
   static getStatus(targetWakeupTime: Date | undefined): Status {
     const current = new Date();
     if (!targetWakeupTime) {
@@ -113,5 +132,11 @@ export class Result extends ApplicationEntity {
         }
       })
     );
+  }
+
+  getWakedUpTime() {
+    const hh = ("0" + this.wakedUpAt?.getHours()).slice(-2);
+    const mm = ("0" + this.wakedUpAt?.getMinutes()).slice(-2);
+    return `${hh}:${mm}`;
   }
 }
