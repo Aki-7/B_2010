@@ -59,3 +59,5 @@ export const DB_USER = getENV("DB_USER", "root");
 export const DB_NAME = getENV("DB_NAME");
 
 export const DB_PASS = getENV("DB_PASS", "");
+
+export const CLOUD_VISION_API_KEY = getENV("CLOUD_VISION_API_KEY", "");

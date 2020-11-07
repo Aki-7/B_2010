@@ -5,12 +5,22 @@ import { Result } from "../entity/Result";
 import getCurrentUser from "../lib/get_current_user";
 import auth from "../middleware/auth";
 import R from "./base/application_router";
+import { parameter } from "../lib/parameter";
+
+const LABEL_LIST = ["Computer", "Clock", "Book"];
 
 const indexRouting = (app: Express) => {
   app.get("/", auth, index);
 };
 
 const index = R(async (req, res) => {
+  const label = req.query["label"] as string;
+  const status = req.query["status"] as string;
+  const annotation = req.query["annotation"] as string;
+
+  const randomLabel = label
+    ? label
+    : LABEL_LIST[Math.floor(Math.random() * LABEL_LIST.length)];
   const user = getCurrentUser(req);
   const todayResult = await Result.today(user);
 
@@ -34,7 +44,16 @@ const index = R(async (req, res) => {
     return sum + paymentIntent.amount_received;
   }, 0);
 
-  res.render("index", { user, todayResult, sum });
+  console.log(label, status, annotation);
+
+  res.render("index", {
+    user,
+    todayResult,
+    sum,
+    label: randomLabel,
+    status,
+    annotation,
+  });
 });
 
 export default indexRouting;
