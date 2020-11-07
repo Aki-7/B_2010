@@ -5,7 +5,12 @@ import stripe from '../config/stripe'
 import ApplicationEntity from './base/application_entity'
 import { InternalServerError } from '../lib/errors'
 import { Result } from './Result'
-
+import twitter from 'twitter'
+import {
+  TWITTER_CONSUMER_KEY,
+  TWITTER_CONSUMER_SECRET_KEY,
+} from '../config/variables'
+import { cpuUsage } from 'process'
 @Entity()
 export class User extends ApplicationEntity {
   @Length(1, 64)
@@ -76,6 +81,24 @@ export class User extends ApplicationEntity {
       `${current.getFullYear()}/${
         current.getMonth() + 1
       }/${current.getDate()} ${this.getTargetWakeupTimeString()}:00`
+    )
+  }
+  async postTwitter(tweetText: string) {
+    const client = new twitter({
+      consumer_key: TWITTER_CONSUMER_KEY,
+      consumer_secret: TWITTER_CONSUMER_SECRET_KEY,
+      access_token_key: this.twitterOauthToken as string,
+      access_token_secret: this.twitterOauthTokenSecret as string,
+    })
+    await client.post(
+      'statuses/update',
+      { status: tweetText },
+      (error, tweet, response) => {
+        if (error) {
+          console.log(error)
+          return error
+        }
+      }
     )
   }
 
