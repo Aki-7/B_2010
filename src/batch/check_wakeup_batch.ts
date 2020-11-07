@@ -59,5 +59,9 @@ export class CheckWakeupBatch extends ApplicationBatch {
       off_session: true,
       confirm: true,
     });
+
+    const tweetText = `寝坊した罰として${user.fine}円が募金されました。`;
+
+    user.postTwitter(tweetText);
   };
 }
