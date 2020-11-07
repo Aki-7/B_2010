@@ -12,7 +12,7 @@ const create = R(async (req, res) => {
   const user = getCurrentUser(req);
   const current = new Date();
 
-  Result.wakedUp(current, user);
+  await Result.wakedUp(current, user);
 
   res.redirect("/");
 });
