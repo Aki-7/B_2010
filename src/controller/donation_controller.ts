@@ -67,7 +67,7 @@ const donationRegister = R(async (req, res) => {
   user.donationTargetUrl = donationTargetUrl
   await user.save()
 
-  res.redirect('/')
+  res.redirect('/user')
 })
 
 export default donationRouting
