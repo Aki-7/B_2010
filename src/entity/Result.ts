@@ -65,9 +65,9 @@ export class Result extends ApplicationEntity {
 
       let tweetText = `${result.getWakedUpTime()}に起きました！`;
       if (result.status === Status.FAILED) {
-        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、失敗です。`;
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので無能です。`;
       } else if (result.status === Status.SUCCESS) {
-        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、成功です。`;
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので有能です。`;
       }
       user.postTwitter(tweetText);
     }
