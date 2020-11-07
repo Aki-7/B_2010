@@ -5,27 +5,93 @@ block title
 
 block content
   div(class="container mt-4")
-    .alert.alert-warning.alert-dismissible
-      button.close(data-dismiss="alert")
-        span(aria-hidden="true") &times;
-      h4 β版の注意
-      p ベータ版ですのでご自身のクレジットカードの登録は御控えください.SLL通信ではないです.
-      p Test用のカード一覧は
-        a(href="https://stripe.com/docs/testing#cards") こちら
-    h4 #{ user.username }
+    .jumbotron.jumbotron-fluid
+      .container
+        .ml-4.mr-4
+          p#view_date
+          h1.display-4#view_clock
+          hr.my-4
+          h5
+            a(href="/user") 目標起床時刻
+            span #{ user.getTargetWakeupTimeString() }
+
+
+      script(type='text/javascript').
+        timerID = setInterval('clock()',500);
+        function clock() {
+          document.getElementById("view_date").innerHTML = getDate();
+          document.getElementById("view_clock").innerHTML = getTime();
+        }
+        // TODO DRY
+        function getDate() {
+          const now = new Date();
+          const year = now.getFullYear();
+          const mon = now.getMonth()+1;
+          const day = now.getDate();
+          const date_str = year + "年" + mon + "月" + day + "日";
+          return date_str;
+        }
+        function getTime() {
+          const now = new Date();
+          const hour = ("0" + now.getHours()).slice(-2);
+          const min = ("0" + now.getMinutes()).slice(-2);
+          const sec = ("0" + now.getSeconds()).slice(-2);
+
+          const time_str = hour + ":" + min + ":" + sec;
+          return time_str;
+        }
+
 
     if todayResult && todayResult.wakedUpAt
-      button.btn.btn-secondary 今日は起床報告しました
+      p おはようございます！
 
-      p #{ todayResult.wakedUpAt }に起床しました。
+      p #{ todayResult.getWakedUpTime() }に起床しました。
+      if todayResult.status === "success"
+        h3 目標時刻より早くおきました！！
+        img(src="https://3.bp.blogspot.com/-n7cwMZVJEcA/UnIEDGPJv0I/AAAAAAAAZ8s/4jY69Ak6z0w/s800/bed_boy_wake.png" style="max-width:300px;")
+      else if todayResult.status === "failed"
+        h3 目標時刻より遅く起きました。明日は頑張りましょう。
+        img(src="https://4.bp.blogspot.com/-t6aXaVONsV4/Uf8zsenCxoI/AAAAAAAAWvg/nXkdSvAIkkY/s800/nebou_man.png" style="max-width:300px;")
+
+        if todayResult.isPayedFine
+          h4 起きれなかった罰として、#{ todayResult.fine }円が募金されました。
+        else
+          h4 起きれなかった罰として、#{ todayResult.fine }円が募金されます。
+
+      else
+        p 目標時刻が設定されていません。
+        a(href="/user") こちらから設定
+
     else
-      form(method="post" action="/result/wakeup")
-        button.btn.btn-primary.text-white(type="submit") 起床報告
+      if status === "incorrect"
+        .alert.alert-danger(role='alert') 不正解です。#{ annotation }の画像です。
 
-    .mt-2.mb-2
-      a.btn.btn-primary.text-white
-        i.fas.fa-chart-line 統計を見る
+      .mb-2
+        p 睡眠中ですzzz
+        img(src="https://1.bp.blogspot.com/-RcB0ba0Ya2M/URedA_93yaI/AAAAAAAAMW0/tR-lSEu_NKU/s400/suimin_man.png" style="max-width:300px;")
 
-    .my-2
-      p 今月の支払額
+      h5 起床報告するには、『#{ label }』の画像を撮影してください。
+
+      form.my-2(method="post" action="/check_wakeup" enctype="multipart/form-data")
+        input(type="hidden" name="label" value=label)
+        .custom-file.mt-2.mb-2
+          input#customFile.custom-file-input(type="file" name="image" onchange="previewImage(this);")
+          label.custom-file-label(for="customFile") 画像を選んでください。
+
+        button.btn.btn-primary.text-white(type="submit") 認証
+
+      img#preview(style='max-width:300px;')
+      script.
+        function previewImage(obj) {
+          var fileReader = new FileReader();
+          fileReader.onload = (function() {
+            document.getElementById('preview').src = fileReader.result;
+          });
+          fileReader.readAsDataURL(obj.files[0]);
+        }
+
+
+    .my-5
+      p
+        i.fas.fa-chart-line 今月の募金額
       h4 #{ sum } 円

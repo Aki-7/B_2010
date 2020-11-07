@@ -36,6 +36,43 @@ export class Result extends ApplicationEntity {
   @ManyToOne(() => User, (user) => user.results)
   readonly user!: User;
 
+  static async wakedUp(current: Date, user: User) {
+    const todayResult = await Result.today(user);
+    if (todayResult) {
+      todayResult.wakedUpAt = current;
+      await todayResult.save();
+
+      let tweetText = `${todayResult.getWakedUpTime()}に起きました！`;
+      if (todayResult.status === Status.FAILED) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので無能です。${
+          user.fine
+        }円が募金されます。`;
+      } else if (todayResult.status === Status.SUCCESS) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので有能です。`;
+      }
+      user.postTwitter(tweetText);
+    } else {
+      const params = {
+        userId: user.id,
+        status: Result.getStatus(user.targetWakeupTime),
+        fine: user.fine,
+        wakedUpAt: current,
+        targetWakeupTime: user.targetWakeupTime,
+      };
+
+      const result = Result.create(params);
+      await result.save();
+
+      let tweetText = `${result.getWakedUpTime()}に起きました！`;
+      if (result.status === Status.FAILED) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、失敗です。`;
+      } else if (result.status === Status.SUCCESS) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、成功です。`;
+      }
+      user.postTwitter(tweetText);
+    }
+  }
+
   static getStatus(targetWakeupTime: Date | undefined): Status {
     const current = new Date();
     if (!targetWakeupTime) {
@@ -113,5 +150,11 @@ export class Result extends ApplicationEntity {
         }
       })
     );
+  }
+
+  getWakedUpTime() {
+    const hh = ("0" + this.wakedUpAt?.getHours()).slice(-2);
+    const mm = ("0" + this.wakedUpAt?.getMinutes()).slice(-2);
+    return `${hh}:${mm}`;
   }
 }
