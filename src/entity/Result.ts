@@ -41,6 +41,16 @@ export class Result extends ApplicationEntity {
     if (todayResult) {
       todayResult.wakedUpAt = current;
       await todayResult.save();
+
+      let tweetText = `${todayResult.getWakedUpTime()}に起きました！`;
+      if (todayResult.status === Status.FAILED) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので無能です。${
+          user.fine
+        }円が募金されます。`;
+      } else if (todayResult.status === Status.SUCCESS) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので有能です。`;
+      }
+      user.postTwitter(tweetText);
     } else {
       const params = {
         userId: user.id,
@@ -52,6 +62,14 @@ export class Result extends ApplicationEntity {
 
       const result = Result.create(params);
       await result.save();
+
+      let tweetText = `${result.getWakedUpTime()}に起きました！`;
+      if (result.status === Status.FAILED) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、失敗です。`;
+      } else if (result.status === Status.SUCCESS) {
+        tweetText += `目標は${user.getTargetWakeupTimeString()}なので、成功です。`;
+      }
+      user.postTwitter(tweetText);
     }
   }
 

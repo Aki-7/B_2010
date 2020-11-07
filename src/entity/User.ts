@@ -10,7 +10,6 @@ import {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET_KEY,
 } from "../config/variables";
-import { cpuUsage } from "process";
 @Entity()
 export class User extends ApplicationEntity {
   @Length(1, 64)
@@ -90,16 +89,12 @@ export class User extends ApplicationEntity {
       access_token_key: this.twitterOauthToken as string,
       access_token_secret: this.twitterOauthTokenSecret as string,
     });
-    await client.post(
-      "statuses/update",
-      { status: tweetText },
-      (error, tweet, response) => {
-        if (error) {
-          console.log(error);
-          return error;
-        }
+    await client.post("statuses/update", { status: tweetText }, (error) => {
+      if (error) {
+        console.log(error);
+        return error;
       }
-    );
+    });
   }
 
   getTargetWakeupTimeString() {

@@ -58,8 +58,6 @@ export const DB_USER = getENV("DB_USER", "root");
 
 export const DB_PASS = getENV("DB_PASS", "");
 
-export const DB_PASS = getENV("DB_PASS", "");
-
 export const DB_NAME = getENV("DB_NAME");
 
 export const TWITTER_CONSUMER_KEY = getENV("TWITTER_CONSUMER_KEY");
@@ -67,13 +65,5 @@ export const TWITTER_CONSUMER_KEY = getENV("TWITTER_CONSUMER_KEY");
 export const TWITTER_CONSUMER_SECRET_KEY = getENV(
   "TWITTER_CONSUMER_SECRET_KEY"
 );
-
-export const TWITTER_API_ACCESS_TOKEN = getENV("TWITTER_API_ACCESS_TOKEN");
-
-export const TWITTER_API_ACCESS_TOKEN_SECRET = getENV(
-  "TWITTER_API_ACCESS_TOKEN_SECRET"
-);
-
-export const TWITTER_CALLBACK_URL = getENV("TWITTER_CALLBACK_URL");
 
 export const CLOUD_VISION_API_KEY = getENV("CLOUD_VISION_API_KEY", "");

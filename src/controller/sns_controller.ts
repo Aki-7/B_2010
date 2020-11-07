@@ -3,8 +3,6 @@ import qs from "query-string";
 import request from "request";
 import OAuth from "oauth-1.0a";
 import crypto from "crypto";
-import twitter from "twitter";
-import dayjs from "dayjs";
 import {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET_KEY,
@@ -101,14 +99,6 @@ const twitterCallback = R((req, res, next) => {
         user.twitterOauthToken = oauthToken as string;
         user.twitterOauthTokenSecret = oauthTokenSecret as string;
         await user.save();
-
-        const today_date = dayjs();
-
-        const tweetText = `私は今日の朝${today_date.hour()}時${today_date.minute()}分に起きました!素晴らしい！`;
-
-        console.log(tweetText);
-
-        await user.postTwitter(tweetText);
       }
 
       res.redirect("/sns");
