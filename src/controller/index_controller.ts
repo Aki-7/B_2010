@@ -5,7 +5,6 @@ import { Result } from "../entity/Result";
 import getCurrentUser from "../lib/get_current_user";
 import auth from "../middleware/auth";
 import R from "./base/application_router";
-import { parameter } from "../lib/parameter";
 
 const LABEL_LIST = ["Computer", "Clock", "Book"];
 
