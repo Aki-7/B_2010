@@ -4,6 +4,7 @@ import request from 'request'
 import OAuth from 'oauth-1.0a'
 import crypto from 'crypto'
 import twitter from 'twitter'
+import dayjs from 'dayjs'
 import {
   TWITTER_CONSUMER_KEY,
   TWITTER_CONSUMER_SECRET_KEY,
@@ -94,6 +95,29 @@ const twitterCallback = R((req, res, next) => {
         user.twitterOauthToken = oauthToken as string
         user.twitterOauthTokenSecret = oauthTokenSecret as string
         await user.save()
+
+        const client = new twitter({
+          consumer_key: TWITTER_CONSUMER_KEY,
+          consumer_secret: TWITTER_CONSUMER_SECRET_KEY,
+          access_token_key: oauthToken as string,
+          access_token_secret: oauthTokenSecret as string,
+        })
+
+        const today_date = dayjs()
+
+        const tweetText = `私は今日の朝${today_date.hour()}時${today_date.minute()}分に起きました!素晴らしい！`
+        console.log(tweetText)
+
+        await client.post(
+          'statuses/update',
+          { status: tweetText },
+          (error, tweet, response) => {
+            if (error) {
+              console.log(error)
+              return next(error)
+            }
+          }
+        )
       }
 
       res.redirect('/sns')
