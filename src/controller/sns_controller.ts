@@ -99,7 +99,10 @@ const twitterCallback = R((req, res, next) => {
         const today_date = dayjs()
 
         const tweetText = `私は今日の朝${today_date.hour()}時${today_date.minute()}分に起きました!素晴らしい！`
+
         console.log(tweetText)
+
+        await user.postTwitter(tweetText)
       }
 
       res.redirect('/sns')
