@@ -51,6 +51,24 @@ block content
                   .input-group-append
                     button.btn.btn-primary(type="submit") 募金
 
+        h6.mt-4 募金先について
+        form(action="/donation/register", method="post" onsubmit="return confirm('これで登録します、よろしいですか?')")
+          .form-row.align-items-center
+            .col-auto.my-1
+              .form-group
+                .input-group
+                  .input-group-prepend
+                    .input-group-text 名前
+                  input.form-control(name="donationTarget", value=user.donationTarget placeholder="UNICEF")
+
+              .form-group
+                .input-group
+                  .input-group-prepend
+                    .input-group-text URL
+                  input.form-control(name="donationTargetUrl", value=user.donationTargetUrl placeholder="https://www.unicef.org/")
+              button.btn.btn-primary(type="submit") 募金先登録
+
+
       li.list-group-item
         h5.mb-2 クレジットカードリスト
         table(class="table mb-4")
