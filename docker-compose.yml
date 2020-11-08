@@ -16,6 +16,7 @@ services:
       - CLOUD_VISION_API_KEY
       - TWITTER_CONSUMER_KEY
       - TWITTER_CONSUMER_SECRET_KEY
+      - TZ=Asia/Tokyo
 
   mysql:
     image: mysql:5.7
