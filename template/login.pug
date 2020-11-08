@@ -4,8 +4,17 @@ block title
   title Document
 
 block content
-  div(class="container mt-4")
+  div.container.my-4
     h1 Login
+    .alert.alert-warning.alert-dismissible
+      button.close(data-dismiss="alert")
+        span(aria-hidden="true") &times;
+      h4 β版の案内
+      p 以下の認証情報でログインいただけます
+      pre
+       | test@user.com
+       | pAssword
+
     form(action="/login" method="post" class="my-4")
       div(class="form-group")
         label Email

@@ -4,8 +4,13 @@ block title
   title Document
 
 block content
-  div(class="container mt-4")
+  div.container.my-4
     h1 Signup
+    .alert.alert-warning.alert-dismissible
+      button.close(data-dismiss="alert")
+        span(aria-hidden="true") &times;
+      h4 β版の案内
+      p メール認証機能はありませんので、適当なメールアドレスでユーザを作成できます.
     form(action="/signup" method="post" class="my-4")
       div(class="form-group")
         label Username
