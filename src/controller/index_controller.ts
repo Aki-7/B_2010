@@ -43,8 +43,6 @@ const index = R(async (req, res) => {
     return sum + paymentIntent.amount_received;
   }, 0);
 
-  console.log(label, status, annotation);
-
   res.render("index", {
     user,
     todayResult,
