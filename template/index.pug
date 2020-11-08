@@ -75,7 +75,7 @@ block content
       form.my-2(method="post" action="/check_wakeup" enctype="multipart/form-data")
         input(type="hidden" name="label" value=label)
         .custom-file.mt-2.mb-2
-          input#customFile.custom-file-input(type="file" name="image" onchange="previewImage(this);")
+          input#customFile.custom-file-input(type="file" name="image" onchange="previewImage(this);" required)
           label.custom-file-label(for="customFile") 画像を選んでください。
 
         button.btn.btn-primary.text-white(type="submit") 認証

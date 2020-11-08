@@ -27,6 +27,7 @@ const check = R(async (req, res) => {
 
   if (files.length == 0) {
     res.status(400);
+    res.send();
     return;
   }
 
