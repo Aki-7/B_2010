@@ -1,6 +1,6 @@
 <h1>DOW</h1>
 
-<p>Donate Or Wake up</p>
+🔗 [Donate Or Wake up](http://dow.teguchi.jp)
 
 [![IMAGE ALT TEXT HERE](./doc/DOW.png)](https://dow.teguchi.jp)
 
