@@ -25,7 +25,7 @@ const signup = R((req, res) => {
   res.render("signup");
 });
 
-const newUser = R(async (req, res) => {
+const newUser = R(async (req, res, next) => {
   const { password, ...params } = parameter(req).fields({
     username: true,
     email: true,
@@ -38,7 +38,11 @@ const newUser = R(async (req, res) => {
   await user.associateStripe();
   await user.save();
 
-  res.redirect("/login");
+  return await passport.authenticate("local", { successRedirect: "/" })(
+    req,
+    res,
+    next
+  );
 });
 
 const logout = R((req, res) => {
