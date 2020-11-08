@@ -60,10 +60,16 @@ export const DB_PASS = getENV("DB_PASS", "");
 
 export const DB_NAME = getENV("DB_NAME");
 
-export const TWITTER_CONSUMER_KEY = getENV("TWITTER_CONSUMER_KEY");
+export const TWITTER_CONSUMER_KEY = switchEnv({
+  prod: () => getENV("TWITTER_CONSUMER_KEY"),
+  dev: () => getENV("TWITTER_CONSUMER_KEY"),
+  test: () => "TWITTER_CONSUMER_KEY",
+});
 
-export const TWITTER_CONSUMER_SECRET_KEY = getENV(
-  "TWITTER_CONSUMER_SECRET_KEY"
-);
+export const TWITTER_CONSUMER_SECRET_KEY = switchEnv({
+  prod: () => getENV("TWITTER_CONSUMER_SECRET_KEY"),
+  dev: () => getENV("TWITTER_CONSUMER_SECRET_KEY"),
+  test: () => "TWITTER_CONSUMER_SECRET_KEY",
+});
 
 export const CLOUD_VISION_API_KEY = getENV("CLOUD_VISION_API_KEY", "");

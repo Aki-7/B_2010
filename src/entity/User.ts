@@ -34,10 +34,10 @@ export class User extends ApplicationEntity {
   twitterOauthTokenSecret?: string;
 
   @Column({ nullable: true })
-  donationTarget?: string
+  donationTarget?: string;
 
   @Column({ nullable: true })
-  donationTargetUrl?: string
+  donationTargetUrl?: string;
 
   //TODO: strategyでどの曜日にするのか
 
