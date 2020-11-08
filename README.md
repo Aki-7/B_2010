@@ -1,8 +1,10 @@
 <h1>DOW<p style="font-size: 20px">Donate Or Wake up</p></h1>
 
-[![IMAGE ALT TEXT HERE](./doc/DOW.png)](https://google.com)
+[![IMAGE ALT TEXT HERE](./doc/DOW.png)](https://dow.teguchi.jp)
 
-<p>人類共通の悩み、それは、、、</p>
+![](doc/title.png)
+
+<!-- <p>人類共通の悩み、それは、、、</p>
 
 <p style="color: darkblue; text-align: center; font-size: 30px; font-weight: bold"> 朝、起きられない。</p>
 
@@ -18,7 +20,7 @@
 
 <p style="text-align: center; font-size: 25px; font-weight: bold; letter-spacing: 2px; margin-top: 30px">
   起きられなければ<span style="color: red; font-size: 50px; margin: 0 10px 0 10px;">募金</span>します!!!
-</p>
+</p> -->
 
 ## 製品概要
 
@@ -30,7 +32,9 @@
 
 #### 1. 起床認証
 
-<div style="display: flex">
+![](doc/feature1.png)
+
+<!-- <div style="display: flex">
   <img src="./doc/Auth.jpg" style="width: 50%; max-width: 250px; margin: 0 16px; border: solid;">
   <div>
     <p>お題の画像を撮影できなければ, 起床したことになりません.</p>
@@ -38,28 +42,32 @@
     <p>例えば図の例では,リビングまで時計を撮影しなくてはいけないため二度寝を防止できます.</p>
     <p>お題の画像が撮影できたかについては, 画像認識の技術を用いて判定します.</p>
   </div>
-</div>
+</div> -->
 
 #### 2. SNS 共有
 
-<div style="display: flex">
+![](doc/feature2.png)
+
+<!-- <div style="display: flex">
   <img src="./doc/SNS.png" style="width: 50%; max-width: 250px; margin: 0 16px; border: solid;">
   <div>
     <p>起床時刻や寝坊, 募金したことが, ユーザのSNSアカウントで自動的に発信されます.</p>
     <p>他人からの目線が早起きをより促進させます.</p>
   </div>
-</div>
+</div> -->
 
 #### 3. 自動募金
 
-<div style="display: flex">
+![](doc/feature3.png)
+
+<!-- <div style="display: flex">
   <img src="./doc/Donation.jpeg" style="width: 50%; max-width: 250px; margin: 0 16px; border: solid;">
   <div>
     <p>事前のクレジットカード登録で有無を言わさず募金されます.</p>
     <p>クラウドファンディングや慈善団体など、募金先を選べます.</p>
     <p></p>
   </div>
-</div>
+</div> -->
 
 ### 今後の展望
 
